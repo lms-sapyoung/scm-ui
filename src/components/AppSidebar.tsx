@@ -11,7 +11,9 @@ import {
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
+  SidebarTrigger,
 } from "@/components/ui/sidebar";
+import { ProjectSelector, type Project } from "@/components/ProjectSelector"
 
 const items = [
   { title: "대시보드", url: "/", icon: Home },
@@ -20,25 +22,42 @@ const items = [
   { title: "상태", url: "/status", icon: BarChart2 },
 ];
 
-export function AppSidebar() {
+interface AppSidebarProps {
+  projects: Project[];
+  selectedProjectId: string;
+  setSelectedProjectId: (id: string) => void;
+}
+
+export function AppSidebar({ projects, selectedProjectId, setSelectedProjectId }: AppSidebarProps) {
   const location = useLocation();
   return (
     <Sidebar>
-      <SidebarHeader>
-        <div className="flex flex-col w-full items-center">
-          <span className="text-lg font-bold tracking-tight py-2">llaputa</span>
-          <div className="w-full border-b" />
-        </div>
-      </SidebarHeader>
-      <SidebarMenuItem>
-        <CreateIssueDialog projectId="default">
-          <button className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-md text-sm font-medium border hover:bg-muted hover:text-primary transition-colors">
-            <Pencil className="w-4 h-4" />
-            <span>새 이슈</span>
-          </button>
-        </CreateIssueDialog>
-      </SidebarMenuItem>
+      <div className="relative">
+        <SidebarHeader>
+          <div className="w-full h-full flex items-center justify-center">
+            <span className="text-lg font-bold tracking-tight">llaputa</span>
+          </div>
+        </SidebarHeader>
+        <SidebarTrigger className="absolute -right-3 top-4" />
+      </div>
       <SidebarContent>
+        <div className="px-2 pt-4">
+          <div className="bg-white rounded-xl shadow flex items-center px-3 py-2 mb-4 border border-gray-100">
+            <ProjectSelector
+              projects={projects}
+              value={selectedProjectId}
+              onChange={setSelectedProjectId}
+            />
+          </div>
+        </div>
+        <div className="px-2 mb-6">
+          <CreateIssueDialog projectId="default">
+            <button className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-md text-sm font-medium border hover:bg-muted hover:text-primary transition-colors">
+              <Pencil className="w-4 h-4" />
+              <span>새 이슈</span>
+            </button>
+          </CreateIssueDialog>
+        </div>
         <SidebarGroup>
           <SidebarGroupLabel>메뉴</SidebarGroupLabel>
           <SidebarGroupContent>

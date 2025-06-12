@@ -27,7 +27,7 @@ export function Sidebar({ children }: { children: React.ReactNode }) {
   const { collapsed } = useSidebar()
   return (
     <aside className={cn(
-      "h-screen bg-white border-r fixed left-0 top-0 z-40 flex flex-col transition-all duration-200",
+      "h-screen bg-white border-r flex flex-col transition-all duration-200",
       collapsed ? "w-16" : "w-48"
     )}>
       {children}
@@ -42,7 +42,7 @@ export function SidebarTrigger({ className }: { className?: string }) {
       type="button"
       onClick={toggle}
       className={cn(
-        "absolute top-4 right-[-16px] z-50 bg-white border rounded-full shadow p-1 hover:bg-muted transition-all",
+        "absolute top-4 right-0 z-50 bg-white border-l border-t border-b rounded-r-full shadow-sm p-1 hover:bg-muted transition-all",
         className
       )}
       aria-label={collapsed ? "사이드바 펼치기" : "사이드바 접기"}
@@ -60,7 +60,7 @@ export function SidebarTrigger({ className }: { className?: string }) {
 }
 
 export function SidebarHeader({ children }: { children: React.ReactNode }) {
-  return <div className="sticky top-0 z-10 bg-white border-b px-4 py-3 flex items-center h-14">{children}</div>
+  return <div className="sticky top-0 z-10 bg-white py-3 flex items-center h-14">{children}</div>
 }
 
 export function SidebarFooter({ children }: { children: React.ReactNode }) {
@@ -104,9 +104,12 @@ export function SidebarMenuButton({ asChild = false, children, ...props }: { asC
 }
 
 export function SidebarInset({ children }: { children: React.ReactNode }) {
-  // 사이드바 너비만큼 왼쪽 패딩
+  const { collapsed } = useSidebar()
   return (
-    <div className="pl-48 min-h-screen bg-gray-50 flex flex-col">
+    <div className={cn(
+      "min-h-screen bg-gray-50 flex flex-col transition-all duration-200",
+      collapsed ? "ml-16" : "ml-48"
+    )}>
       {children}
     </div>
   )

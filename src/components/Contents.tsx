@@ -6,7 +6,7 @@ interface ContentsProps {
 
 export function Contents({ children }: ContentsProps) {
   return (
-    <main className="flex-1 container mx-auto p-4">
+    <main className="flex-1 w-full p-4">
       {children}
     </main>
   )
